@@ -1,0 +1,17 @@
+#!/usr/bin/expect -f
+
+set hostname [lindex $argv 0]
+set directory [lindex $argv 1]
+
+spawn ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no psncallback@213.131.1.8
+expect "psncallback@213.131.1.8's password:"
+send "1001\n"
+expect "psncallback@andra:~$"
+send "if \[ ! -d $directory \]; then mkdir $directory; fi\n"
+expect "psncallback@andra:~$"
+send "cd $directory\n"
+expect "psncallback@andra:~$"
+send "touch $hostname\n"
+expect "psncallback@andra:~$"
+send "exit\n"
+interact
