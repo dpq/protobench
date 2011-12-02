@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. sizes
+. sizes.sh
 
 for SIZE in $SIZES; do
   echo $SIZE

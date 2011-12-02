@@ -1,7 +1,7 @@
 #!/bin/bash
 
-. servers
-. clients
+. servers.sh
+. clients.sh
 
 for HOST in $SERVERS
 do

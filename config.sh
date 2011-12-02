@@ -1,3 +1,5 @@
+#!/bin/bash
+
 REPLICATION=5
 TRACKER=http://213.131.1.8:6969
 DATAHOST=http://213.131.1.8

@@ -1,9 +1,9 @@
 #!/bin/bash
 # Prerequisites: bash
 
-. servers
-. clients
-. config
+. servers.sh
+. clients.sh
+. config.sh
 
 #sudo apt-get update && apt-get -y install bittorrent openssh-client
 

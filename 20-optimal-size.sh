@@ -1,6 +1,6 @@
 #!/bin/bash
-. config
-. sizes
+. config.sh
+. sizes.sh
 
 for SIZE in $SIZES; do
   TIME=0
