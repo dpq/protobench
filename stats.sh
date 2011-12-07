@@ -2,16 +2,17 @@
 
 stats() {
   RS=0
-  for i in `seq $RUNS`; do
-    RS=$(eval echo \$R$i + $RS | bc)
+  for i in `seq $REPLICATION`; do
+    RS=$(eval echo \$R$i + $RS)
   done
 
+  RS=`echo "scale=4; ($RS)/$REPLICATION" | bc`
   SIGMA=0
-  for i in `seq $RUNS`; do
-    delta=$(eval echo \$R$i - $RS)
-    SIGMA=`echo "scale=2; $SIGMA + $delta^2"`
+  for i in `seq $REPLICATION`; do
+    delta=$(eval echo \$R$i - $RS )
+    SIGMA=`echo "scale=4; $SIGMA + ($delta)^2" | bc`
   done
 
-  echo Mean $(echo "scale=2; $RUNS*1073.741824*8 / $RS " | bc)
-  echo Sigma $(echo "scale=2; sqrt($SIGMA/$RUNS) " | bc)
+  echo Mean: $(echo "scale=4; $RS" | bc | awk '{printf "%f", $0}')
+  echo Sigma: $(echo "scale=4; sqrt($SIGMA/$REPLICATION) " | bc | awk '{printf "%f", $0}')
 }
