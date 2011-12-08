@@ -16,9 +16,5 @@ btmakemetafile $FILE $TRACKER > /dev/null
 
 END=`date +%s.%N`
 TIME=`echo $END - $START | bc`
-#if [[ ${TIME:0:1} == '.' ]]
-#then
-# TIME=0$TIME
-#fi
 
 echo $TIME
