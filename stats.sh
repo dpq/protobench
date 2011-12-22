@@ -13,6 +13,5 @@ stats() {
     SIGMA=`echo "scale=4; $SIGMA + ($delta)^2" | bc`
   done
 
-  echo Mean: $(echo "scale=4; $RS" | bc | awk '{printf "%f", $0}')
-  echo Sigma: $(echo "scale=4; sqrt($SIGMA/$REPLICATION) " | bc | awk '{printf "%f", $0}')
+  echo $(echo "scale=4; $RS" | bc | awk '{printf "%f", $0}')  $(echo "scale=4; sqrt($SIGMA/$REPLICATION) " | bc | awk '{printf "%f", $0}')
 }
