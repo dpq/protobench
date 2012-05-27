@@ -31,5 +31,4 @@ for HOST in $CLIENTS; do
   scp udt.sdk.4.10.tar.gz $HOST:/home/protobench
   ssh $HOST 'cd /home/protobench && tar -xzf udt.sdk.4.10.tar.gz && cd udt4/src && make && cd ../app && make'
   ssh $HOST sudo ln -s /home/protobench/udt4/src/libudt.so /usr/local/lib
-  scp udt4/app/sendfile $HOST:/home/protobench/
 done
