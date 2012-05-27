@@ -8,7 +8,6 @@ do
  ssh-copy-id root@$HOST
 done
 
-for HOST in $CLIENTS
-do
- ssh-copy-id rumith@$HOST
-done
+ssh-copy-id root@$PROXY
+
+# I already have the necessary keys installed to the hosts used as clients
