@@ -1,20 +1,20 @@
 #!/bin/bash
 
-RUNS=25
+. stats.sh
+. config.sh
+. servers.sh
+. clients.sh
 
-for i in `seq $RUNS`; do
-  START=`date +%s.%N`
-  wget -q http://192.168.100.1/1024.bin
-  END=`date +%s.%N`
-  eval R$i=`echo $END - $START | bc | sed "s/.\{6\}$//"`
-  rm 1024.bin;
+N=1 # must match haproxy's settings - number of servers. TODO this is not automated yet, unfortunately :(
+M=4 # number of clients to run. No feedback system, so TODO this is not automated yet as well :(
+
+echo Run started
+for i in `seq $N`; do
+  for m in `seq $M`; do
+    HOST=$(echo $CLIENTS | awk "{ print \$$m }")
+    echo $HOST
+    ssh $HOST "nohup /home/protobench/520-http-matrix-element.sh $N $M $i $PROXY </dev/null >/dev/null 2>&1 &"
+  done
 done
 
-
-RS=0
-for i in `seq $RUNS`; do
-  RS=$(eval echo \$R$i + $RS | bc)
-done
-
-echo $RS
-echo $(echo "scale=2; $RS / $RUNS" | bc)
+echo Run launch complete!
