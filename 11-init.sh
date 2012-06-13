@@ -19,6 +19,9 @@ for HOST in $SERVERS; do
   ssh -i ~/.ssh/aws.pem root@$HOST wget -bq $DATAHOST/1024.bin -o log -O /home/protobench/1024.bin
   scp -i ~/.ssh/aws.pem udt.sdk.4.10.tar.gz root@$HOST:/home/protobench
   ssh -i ~/.ssh/aws.pem root@$HOST 'cd /home/protobench && tar -xzf udt.sdk.4.10.tar.gz && cd udt4/src && make && cd ../app && make'
+  ssh -i ~/.ssh/aws.pem root@$HOST 'wget http://www.globus.org/ftppub/gt5/5.2/5.2.0/installers/repo/globus-repository-squeeze_0.0.2_all.deb && dpkg -i globus-repository-squeeze_0.0.2_all.deb && aptitude update && tasksel install globus-gridftp && aptitude -y upgrade && aptitude -y install globus-simple-ca'
+  ssh -i ~/.ssh/aws.pem root@$HOST ln -s /home/protobench/ /var/www
+  ssh -i ~/.ssh/aws.pem root@$HOST invoke-rc.d nginx start
 done
 
 ssh -i /.ssh/aws.pem root@$PROXY apt-get -y install haproxy pen
@@ -26,9 +29,9 @@ ssh -i /.ssh/aws.pem root@$PROXY pen 21 -l pen.log -p pen.pid am0:21 am1:21 am2:
 
 for HOST in $CLIENTS; do
   ssh $HOST sudo apt-get install wget bittorrent build-essential
+  ssh $HOST 'wget http://www.globus.org/ftppub/gt5/5.2/5.2.0/installers/repo/globus-repository-squeeze_0.0.2_all.deb && sudo dpkg -i globus-repository-squeeze_0.0.2_all.deb && sudo aptitude update && sudo tasksel install globus-gridftp && sudo aptitude -y upgrade && sudo aptitude -y install globus-simple-ca'
   ssh $HOST sudo mkdir /home/protobench
   ssh $HOST sudo chown -R rumith:rumith /home/protobench
   scp udt.sdk.4.10.tar.gz $HOST:/home/protobench
   ssh $HOST 'cd /home/protobench && tar -xzf udt.sdk.4.10.tar.gz && cd udt4/src && make && cd ../app && make'
-  ssh $HOST sudo ln -s /home/protobench/udt4/src/libudt.so /usr/local/lib
 done
