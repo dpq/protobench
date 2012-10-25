@@ -11,3 +11,16 @@ done
 ssh-copy-id root@$PROXY
 
 # I already have the necessary keys installed to the hosts used as clients
+HOSTS=($SERVERS $PROXY)
+IFS=' ' read -a HOSTS <<< $SERVERS
+echo $HOSTS
+seq ${#SERVERS[@]}
+
+a=1
+IFS=' ' read -ra HOSTS <<< "$SERVERS"
+for i in "${HOSTS[@]}"; do
+	echo -e "\nHost p$a\n  User root\n  IdentityFile ~/.ssh/aws.pem\n  Hostname $i" #>> ~/.ssh/config
+	a=$(($a+1))
+done
+
+echo -e "\nHost pp\n  User root\n  IdentityFile ~/.ssh/aws.pem\n  Hostname $PROXY\n  UserKnownHostsFile /dev/null\n  StrictHostKeyChecking no" >> ~/.ssh/config
