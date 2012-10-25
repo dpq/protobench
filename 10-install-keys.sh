@@ -11,10 +11,6 @@ done
 ssh-copy-id root@$PROXY
 
 # I already have the necessary keys installed to the hosts used as clients
-HOSTS=($SERVERS $PROXY)
-IFS=' ' read -a HOSTS <<< $SERVERS
-echo $HOSTS
-seq ${#SERVERS[@]}
 
 a=1
 IFS=' ' read -ra HOSTS <<< "$SERVERS"

@@ -21,7 +21,7 @@ to identify you in the future on all the servers.
 3. Next step is to generate some random files using /dev/urandom as a source and list
 of sizes from the sizes.sh. It is doing by *generate.sh script
 
-4. The torrent protocol uses .torrent metafiles for work. The script *optimal-size.sh ???########3
+4. The torrent protocol uses .torrent metafiles for work. The script *optimal-size.sh
 generates such files
 
 5. Simple torrent is tested by *torrent.sh and it is not written yet.
