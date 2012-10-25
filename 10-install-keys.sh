@@ -19,7 +19,7 @@ seq ${#SERVERS[@]}
 a=1
 IFS=' ' read -ra HOSTS <<< "$SERVERS"
 for i in "${HOSTS[@]}"; do
-	echo -e "\nHost p$a\n  User root\n  IdentityFile ~/.ssh/aws.pem\n  Hostname $i" #>> ~/.ssh/config
+	echo -e "\nHost p$a\n  User root\n  IdentityFile ~/.ssh/aws.pem\n  Hostname $i" >> ~/.ssh/config
 	a=$(($a+1))
 done
 
