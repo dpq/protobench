@@ -89,10 +89,10 @@ class MasterServer(object):
       last_exp_id = res.rows[0][0]
       if last_exp_id:
         res = my.query("select replication, ncli from experiment where id=%s", (last_exp_id,))
-        rep, ncli = res.rows[0][0], res.rows[0][1]
+        rep_prev, ncli_prev = res.rows[0][0], res.rows[0][1]
         res = my.query("select count(*) from measurement where experiment_id=%s", (last_exp_id,))
         cnt = res.rows[0][0]
-        if cnt < rep*ncli:
+        if cnt < rep_prev*ncli_prev:
           resp.status_code = 500
           resp.response = ["Unable to comply, experiment in progress"]
           return resp(env, start_response)
